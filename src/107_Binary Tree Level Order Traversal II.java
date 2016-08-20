@@ -39,36 +39,37 @@ private void travelTree(int level, TreeNode root, List<List<Integer>> result) {
  *     TreeNode(int x) { val = x; }
  * }
  */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
        LinkedList<List<Integer>> lob = new LinkedList<List<Integer>>();
         if (root == null) return lob;
-        LinkedList<Integer> row = new LinkedList<Integer>();
-        TreeNode depth = null;
         Queue<TreeNode> q = new LinkedList<TreeNode>();
-        q.add(root);
+        q.offer(root);
         while (!q.isEmpty()) {
-            TreeNode n = q.remove();
-            if (n == depth) {
-                lob.addFirst(row);
-                row = new LinkedList<Integer>();
-                depth = null;
-            }
-            row.add(n.val);
-            if (n.left != null) {
-                if (depth == null) {
-                    depth = n.left;
+            int size=q.size();
+            LinkedList<Integer> row = new LinkedList<Integer>();
+            for(int i=0;i<size;i++){
+                TreeNode n=q.poll();
+                row.add(n.val);
+                if(n.left!=null){
+                    q.offer(n.left);
                 }
-                q.add(n.left);
-            }
-            if (n.right != null) {
-                if (depth == null) {
-                    depth = n.right;
+                if(n.right!=null){
+                    q.offer(n.right);
                 }
-                q.add(n.right);
             }
+            lob.addFirst(row);
         }
-        lob.addFirst(row);
+        //lob.addFirst(row);
         return lob;
     }
 }
