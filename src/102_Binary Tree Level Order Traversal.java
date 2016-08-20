@@ -55,3 +55,31 @@ public class Solution {
         helper(root.right, depth+1, result);
     }
 }
+
+//further in DFS, as there is no need that we execute the dfs in-order, we can replace while loop by an if
+//there will not any faster, but makes the code short
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        helper(root, 0, result);
+        return result;      
+    }
+    public void helper(TreeNode root, int depth, List<List<Integer>> result) {
+        if(root==null) return;
+        if(result.size()<=depth){
+            result.add(new ArrayList<Integer>());
+        }
+        result.get(depth).add(root.val);
+        helper(root.left, depth+1, result);
+        helper(root.right, depth+1, result);
+    }
+}
